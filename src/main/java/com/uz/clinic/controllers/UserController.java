@@ -1,6 +1,7 @@
 package com.uz.clinic.controllers;
 
 import com.uz.clinic.domain.User;
+import com.uz.clinic.domain.VisitDto;
 import com.uz.clinic.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +27,18 @@ public class UserController {
     }
 
     @GetMapping("/email/{email}")
-    public Optional<User> getUserByEmail(@PathVariable String email){
+    public User getUserByEmail(@PathVariable String email){
         return userService.getUserByEmail(email);
+    }
+
+    @DeleteMapping
+    public void deleteUser(int id){
+        userService.removeUser(id);
+    }
+
+    @PatchMapping("/update/{id}")
+    public void upadteUser(@PathVariable int id, @RequestBody User updatedUser){
+        userService.updateUser(id, updatedUser);
     }
 
     @PostMapping

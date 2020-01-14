@@ -1,7 +1,11 @@
 package com.uz.clinic.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class User {
@@ -21,16 +25,15 @@ public class User {
     private String zip_code;
     private String phone;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private Set<Visit> visit = new HashSet<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "doctor", fetch = FetchType.LAZY)
+    private Set<Visit> visitDoctor = new HashSet<>();
 
     public User() {
-    }
-
-    public int getId() {
-        return user_id;
-    }
-
-    public void setId(int id) {
-        this.user_id = id;
     }
 
     public String getPesel() {
@@ -113,4 +116,27 @@ public class User {
         this.phone = phone;
     }
 
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public Set<Visit> getVisit() {
+        return visit;
+    }
+
+    public void setVisit(Set<Visit> visit) {
+        this.visit = visit;
+    }
+
+    public Set<Visit> getVisitDoctor() {
+        return visitDoctor;
+    }
+
+    public void setVisitDoctor(Set<Visit> visitDoctor) {
+        this.visitDoctor = visitDoctor;
+    }
 }

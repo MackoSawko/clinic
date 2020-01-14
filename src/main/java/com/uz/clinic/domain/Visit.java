@@ -1,6 +1,9 @@
 package com.uz.clinic.domain;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.sql.Date;
 
 @Entity
@@ -12,9 +15,21 @@ public class Visit {
     private Date date;
 
     int doctor_id;
+    @Column(name = "user_id")
+    int uzytkownikId;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    User user;
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    private User user;
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "doctor_id", insertable = false, updatable = false)
+    private User doktor;
+
+//    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    User user;
 
 
     public Visit() {
@@ -52,4 +67,14 @@ public class Visit {
     public void setUser(User user) {
         this.user = user;
     }
+
+
+
+//    public User getUser() {
+//        return user;
+//    }
+//
+//    public void setUser(User user) {
+//        this.user = user;
+//    }
 }
